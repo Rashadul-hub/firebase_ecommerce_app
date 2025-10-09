@@ -10,6 +10,7 @@ class DbService{
   Stream<QuerySnapshot> readCategories(){
     return FirebaseFirestore.instance
         .collection("shop_categories")
+        .orderBy("priority", descending: true)
         .snapshots();
   }
 
