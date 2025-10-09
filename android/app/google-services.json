@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "777722360465",
+    "project_id": "contacts-app-7f40a",
+    "storage_bucket": "contacts-app-7f40a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777722360465:android:a1012dbd07ba52af570530",
+        "android_client_info": {
+          "package_name": "com.example.firebase_ecommerce_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpFyVZ9ZobddtPUk5nD1g82YDlGzriT5c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
