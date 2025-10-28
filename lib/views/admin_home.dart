@@ -53,8 +53,8 @@ class _AdminHomeState extends State<AdminHome> {
             // Buttons for Admins
             Row(
               children: [
-                HomeButton(onTap: () {}, name: "All Orders"),
-                HomeButton(onTap: () {}, name: "All Products"),
+                HomeButton(onTap: () {}, name: "Orders"),
+                HomeButton(onTap: () {}, name: "Products"),
               ],
             ),
             Row(
