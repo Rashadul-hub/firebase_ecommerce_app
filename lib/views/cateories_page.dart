@@ -116,7 +116,6 @@ class ModifyCategory extends StatefulWidget {
 }
 
 class _ModifyCategoryState extends State<ModifyCategory> {
-
   final formKey = GlobalKey<FormState>();
   final ImagePicker picker = ImagePicker();
   late XFile? image = null;

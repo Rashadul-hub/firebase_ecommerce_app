@@ -4,7 +4,9 @@ import 'package:firebase_ecommerce_flutter/provider/admin_provider.dart';
 import 'package:firebase_ecommerce_flutter/views/admin_home.dart';
 import 'package:firebase_ecommerce_flutter/views/cateories_page.dart';
 import 'package:firebase_ecommerce_flutter/views/login.dart';
+import 'package:firebase_ecommerce_flutter/views/products_page.dart';
 import 'package:firebase_ecommerce_flutter/views/signup.dart';
+import 'package:firebase_ecommerce_flutter/views/view_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +42,10 @@ class MyApp extends StatelessWidget {
           "/login": (context) => LoginPage(),
           "/signup": (context) => SignupPage(),
           "/home": (context) => AdminHome(),
-          "/category": (context) => CategoriesPage()
+          "/category": (context) => CategoriesPage(),
+          "/products": (context) => ProductsPage(),
+          "/add_product": (context) => ModifyProduct(),
+          "/view_product": (context) => ViewProduct(),
         },
 
       ),
