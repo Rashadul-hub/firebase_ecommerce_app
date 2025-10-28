@@ -1,5 +1,5 @@
 import 'package:firebase_ecommerce_flutter/constants/discount.dart';
-import 'package:firebase_ecommerce_flutter/models/products-model.dart';
+import 'package:firebase_ecommerce_flutter/models/products_model.dart';
 import 'package:flutter/material.dart';
 
 class ViewProduct extends StatefulWidget {

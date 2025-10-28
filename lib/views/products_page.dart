@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:firebase_ecommerce_flutter/models/products-model.dart';
+import 'package:firebase_ecommerce_flutter/models/products_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
