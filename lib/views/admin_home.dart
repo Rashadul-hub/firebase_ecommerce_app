@@ -65,7 +65,9 @@ class _AdminHomeState extends State<AdminHome> {
             ),
             Row(
               children: [
-                HomeButton(onTap: () {}, name: "Categories"),
+                HomeButton(onTap: () {
+                  Navigator.pushNamed(context, "/category");
+                }, name: "Categories"),
                 HomeButton(onTap: () {}, name: "Coupons"),
               ],
             ),
