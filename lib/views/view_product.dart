@@ -1,3 +1,4 @@
+import 'package:firebase_ecommerce_flutter/constants/discount.dart';
 import 'package:firebase_ecommerce_flutter/models/products-model.dart';
 import 'package:flutter/material.dart';
 
@@ -17,9 +18,123 @@ class _ViewProductState extends State<ViewProduct> {
         title: Text("User's View"),
         centerTitle: true,
       ),
-      body: Column(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Image.network(arguments.image, height: 300,width: double.infinity, fit: BoxFit.contain ),
+            
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 10),
+                  Text(
+                      arguments.name,
+                      // maxLines: 2,
+                      // overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                      ),
+                  ),
+        
+        
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                       Text(
+                        "\$${arguments.old_price}",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey.shade700,
+                          decoration: TextDecoration.lineThrough
+                        ),
+                      ),
+                      SizedBox(width: 8),
+        
+                      Text(
+                        "\$${arguments.new_price}",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
+        
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Icon(Icons.arrow_downward , color:  Colors.green,size: 20),
+                      Text("${discountPercent(arguments.old_price, arguments.new_price)} %",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green
+                      ),)
+        
+        
+                    ],
+                  ),
+        
+                  SizedBox(height: 10),
+                  
+                  arguments.maxQuantity == 0 ? Text("Out of Stock",style: TextStyle(
+                    fontSize: 16,
+                    fontWeight:  FontWeight.w500,
+                    color: Colors.red),
+                  ) : Text(
+                     "Only ${arguments.maxQuantity} left in stock",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight:  FontWeight.w500,
+                        color: Colors.green),
+                  ),
+        
+                  SizedBox(height: 10),
+                  Text(
+                    arguments.description,
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight:  FontWeight.w500,
+                        color: Colors.grey.shade700),
+        
+                  ),
+                ],
+              ),
+        
+            )
+          ],
+        ),
+      ),
+      bottomNavigationBar: Row(
         children: [
+          SizedBox(
+            height: 60, width:  MediaQuery.of(context).size.width * .5,
+            child: ElevatedButton(
+              onPressed: (){},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:  Theme.of(context).primaryColor,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder()
+                ),
+                child: Text(
+                "Add to Cart",
 
+              )),
+          ),
+          SizedBox(
+            height: 60, width:  MediaQuery.of(context).size.width * .5,
+            child: ElevatedButton(
+              onPressed: (){},
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor:  Theme.of(context).primaryColor,
+                    shape: RoundedRectangleBorder()
+                ),
+                child: Text(
+                "Buy Now",
+
+              )),
+          ),
         ],
       ),
     );

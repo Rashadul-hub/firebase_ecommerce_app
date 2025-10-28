@@ -34,6 +34,9 @@ class _ProductsPageState extends State<ProductsPage> {
             itemCount: value.products.length,
             itemBuilder: (context, index){
               return ListTile(
+                onTap: (){
+                 Navigator.pushNamed(context, "/view_product", arguments:  products[index]);
+                },
                 leading: Container(
                   height: 54,width: 50,
                   child: Image.network(
