@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_ecommerce_flutter/containers/additional_confirm.dart';
 import 'package:firebase_ecommerce_flutter/controllers/db_service.dart';
 import 'package:firebase_ecommerce_flutter/controllers/storage_service.dart';
 import 'package:firebase_ecommerce_flutter/models/categories_model.dart';
@@ -7,14 +8,14 @@ import 'package:firebase_ecommerce_flutter/provider/admin_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-class CateoriesPage extends StatefulWidget {
-  const CateoriesPage({super.key});
+class CategoriesPage extends StatefulWidget {
+  const CategoriesPage({super.key});
 
   @override
-  State<CateoriesPage> createState() => _CateoriesPageState();
+  State<CategoriesPage> createState() => _CategoriesPageState();
 }
 
-class _CateoriesPageState extends State<CateoriesPage> {
+class _CategoriesPageState extends State<CategoriesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +35,37 @@ class _CateoriesPageState extends State<CateoriesPage> {
           itemBuilder: (context, index){
 
             return ListTile(
+              onTap: (){
+                showDialog(context: context, builder: (context) =>
+                AlertDialog(
+                  title: Text("What you want to do"),
+                  content: Text("Delete action cannot be undone"),
+                  actions: [
+                    TextButton(onPressed: () {
+                      Navigator.pop(context);
+                      showDialog(context: context, builder: (context)=>
+                      AdditionalConfirm(
+                          contentText: "Are you sure you want to delete this item ?",
+                          onYes: (){
+                            DbService().deleteCategories(docId: categories[index].id);
+                            Navigator.pop(context);
+                           },
+                          onNo: (){Navigator.pop(context);},
+                      ));
+                    }, child: Text("Delete Category")),
+                    TextButton(onPressed: (){
+                      Navigator.pop(context);
+                      showDialog(context: context, builder: (context)=> ModifyCategory(
+                        isUpdating: true,
+                        categoryId: categories[index].id,
+                        priority: categories[index].priority,
+                        image: categories[index].image,
+                        name: categories[index].name),
+                      );
+                    }, child: Text("Update Category"))
+                  ],
+                ));
+              },
               leading: Container(
                 height: 54,width: 50,
                 child: Image.network(
@@ -49,8 +81,12 @@ class _CateoriesPageState extends State<CateoriesPage> {
                 "Priority : ${categories[index].priority}"
               ),
               trailing: IconButton(onPressed:(){
-                showDialog(context: context, builder: (context)=> ModifyCategory(isUpdating: true, categoryId: categories[index].id, priority: categories[index].priority));
-
+                showDialog(context: context, builder: (context)=> ModifyCategory(
+                  isUpdating: true,
+                  categoryId: categories[index].id,
+                  priority: categories[index].priority,
+                  image: categories[index].image,
+                  name: categories[index].name,));
               }, icon: Icon(Icons.edit_outlined)),
             );
 
@@ -163,14 +199,15 @@ class _ModifyCategoryState extends State<ModifyCategory> {
               ) : SizedBox()
               : Container(
                 margin: EdgeInsets.all(20),
-                height: 300,
+                height: 200,
                 color: Colors.deepPurple.shade50,
                 child: Image.file(File(image!.path),  fit: BoxFit.contain),
               ),
 
               ElevatedButton(onPressed: (){
                 pickImage();
-              }, child: Text("Pick Image")),
+              }, child: Text("Upload Image")),
+              SizedBox(height: 5),
 
               TextFormField(
                 controller: imageController,

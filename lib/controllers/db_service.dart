@@ -29,8 +29,4 @@ class DbService{
     await FirebaseFirestore.instance.collection("shop_categories").doc(docId).delete();
   }
 
-
-
-
-
 }
