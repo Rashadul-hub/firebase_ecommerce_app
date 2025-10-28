@@ -6,6 +6,7 @@ import 'package:firebase_ecommerce_flutter/views/cateories_page.dart';
 import 'package:firebase_ecommerce_flutter/views/login.dart';
 import 'package:firebase_ecommerce_flutter/views/signup.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
@@ -13,6 +14,7 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await dotenv.load(fileName: ".env");
 
   runApp(const MyApp());
 }

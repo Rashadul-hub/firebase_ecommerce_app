@@ -34,6 +34,12 @@ class _CateoriesPageState extends State<CateoriesPage> {
           itemBuilder: (context, index){
 
             return ListTile(
+              leading: Container(
+                height: 54,width: 50,
+                child: Image.network(
+                    categories[index].image == null || categories[index].image == ""
+                    ? "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" : categories[index].image),
+              ) ,
               title: Text(
                 categories[index].name,
                 maxLines: 2,
@@ -42,6 +48,10 @@ class _CateoriesPageState extends State<CateoriesPage> {
               subtitle: Text(
                 "Priority : ${categories[index].priority}"
               ),
+              trailing: IconButton(onPressed:(){
+                showDialog(context: context, builder: (context)=> ModifyCategory(isUpdating: true, categoryId: categories[index].id, priority: categories[index].priority));
+
+              }, icon: Icon(Icons.edit_outlined)),
             );
 
           });
@@ -92,7 +102,7 @@ class _ModifyCategoryState extends State<ModifyCategory> {
   Future<void> pickImage() async{
        image = await picker.pickImage(source: ImageSource.gallery);
        if(image != null){
-         String? res = await StorageService().uploadImage(image!.path, context);
+         String? res = await CloudinaryStorageService().uploadImageToCloudinary(image!.path, context);
          setState(() {
            if(res != null){
              imageController.text = res;
