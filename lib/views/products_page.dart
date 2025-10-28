@@ -56,10 +56,10 @@ class _ProductsPageState extends State<ProductsPage> {
                                   onNo: (){Navigator.pop(context);},
                                 ));
                           }, child: Text("Delete Product")),
-                          TextButton(onPressed: (){
-                            Navigator.pop(context);
-                            Navigator.pushNamed(context, "/add_product", arguments: products[index]);
-                          }, child: Text("Edit Product"))
+                          // TextButton(onPressed: (){
+                          //   Navigator.pop(context);
+                          //   Navigator.pushNamed(context, "/add_product", arguments: products[index]);
+                          // }, child: Text("Edit Product"))
                         ],
                       ));
                 },
