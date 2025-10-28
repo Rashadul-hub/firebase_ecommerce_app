@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:firebase_ecommerce_flutter/controllers/db_service.dart';
+import 'package:firebase_ecommerce_flutter/controllers/storage_service.dart';
 import 'package:firebase_ecommerce_flutter/models/categories_model.dart';
 import 'package:firebase_ecommerce_flutter/provider/admin_provider.dart';
 import 'package:flutter/material.dart';
@@ -84,6 +88,24 @@ class _ModifyCategoryState extends State<ModifyCategory> {
     super.initState();
   }
 
+  ///Function to Pick image using image picker
+  Future<void> pickImage() async{
+       image = await picker.pickImage(source: ImageSource.gallery);
+       if(image != null){
+         String? res = await StorageService().uploadImage(image!.path, context);
+         setState(() {
+           if(res != null){
+             imageController.text = res;
+             print("Set image url ${res} : ${imageController.text}");
+             ScaffoldMessenger.of(context).showSnackBar(
+               const SnackBar(content: Text('Image Uploaded Successfully'))
+             );
+           }
+         });
+       }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -120,7 +142,25 @@ class _ModifyCategoryState extends State<ModifyCategory> {
                 ),
               ),
               SizedBox(height: 10),
-              ElevatedButton(onPressed: (){}, child: Text("Pick Image")),
+
+              image == null
+                  ? imageController.text.isNotEmpty
+                  ? Container(
+                margin: EdgeInsets.all(20),
+                height: 100,
+                color: Colors.deepPurple.shade50,
+                child: Image.network(imageController.text,fit: BoxFit.contain),
+              ) : SizedBox()
+              : Container(
+                margin: EdgeInsets.all(20),
+                height: 300,
+                color: Colors.deepPurple.shade50,
+                child: Image.file(File(image!.path),  fit: BoxFit.contain),
+              ),
+
+              ElevatedButton(onPressed: (){
+                pickImage();
+              }, child: Text("Pick Image")),
 
               TextFormField(
                 controller: imageController,
@@ -137,6 +177,39 @@ class _ModifyCategoryState extends State<ModifyCategory> {
           ),
         ),
       ),
+
+      actions: [
+        TextButton(onPressed: (){Navigator.pop(context);}, child: Text("Cancel")),
+        TextButton(onPressed: () async {
+          if(formKey.currentState!.validate()){
+              if(widget.isUpdating){
+               await DbService().updateCategories(
+                    docId: widget.categoryId,
+                    data: {
+                      "name": categoryController.text.toLowerCase(),
+                      "image": imageController.text,
+                      "priority": int.parse(priorityController.text)
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Category Updated'))
+                );
+              }else{
+               await DbService().createCategories(
+                    data: {
+                      "name": categoryController.text.toLowerCase(),
+                      "image": imageController.text,
+                      "priority": int.parse(priorityController.text)
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Category Added'))
+                );
+              }
+            }
+          Navigator.pop(context);
+          }, child: Text(widget.isUpdating ? "Update" : "Add"),
+        ),
+      ],
+
     );
   }
 }
